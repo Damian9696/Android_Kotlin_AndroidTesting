@@ -1,0 +1,14 @@
+.idea
+*.iml
+local.properties
+build
+.gradle
+# Eclipse project files
+.project
+.settings/	
+.classpath
+/.circleci/config.yml
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+/gradlew.bat
+/gradlew
