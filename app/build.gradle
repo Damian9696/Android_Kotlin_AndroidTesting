@@ -55,6 +55,15 @@ dependencies {
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"
 
+    // Assertions
+    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+
+    //Core testing
+    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+
+    //Robolectric
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
