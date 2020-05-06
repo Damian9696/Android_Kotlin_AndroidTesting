@@ -7,7 +7,7 @@ import com.example.android.architecture.blueprints.todoapp.data.Task
 /**
  * Created by Damian on 06.05.2020 21:37
  */
-class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDataSource {
+class FakeDataSource(private var tasks: MutableList<Task>? = mutableListOf()) : TasksDataSource {
 
     override suspend fun getTasks(): Result<List<Task>> {
         tasks?.let { return Result.Success(ArrayList(it)) }
