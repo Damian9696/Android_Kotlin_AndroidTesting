@@ -1,6 +1,9 @@
 package com.example.android.architecture.blueprints.todoapp.taskdetail
 
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.android.architecture.blueprints.todoapp.R
@@ -10,6 +13,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.FakeAndro
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -40,12 +44,22 @@ class TaskDetailFragmentTest {
     @Test
     fun activeTaskDetail_DisplayedInUi() = runBlockingTest {
         //GIVEN - Add active (incomplete) task to the DB
-        val activeTask = Task(" Active task", "AndroidX Rocks!!", false)
+        val activeTask = Task("Active task", "AndroidX Rocks!!", false)
 
         tasksRepository.saveTask(activeTask)
 
         //WHEN - Details fragment launched to display task
         val bundle = TaskDetailFragmentArgs(activeTask.id).toBundle()
         launchFragmentInContainer<TaskDetailFragment>(bundle, R.style.AppTheme)
+
+        //THEN - Task Details are displayed on the screen
+        //check that the title/description are both show and correct
+        onView(withId(R.id.task_detail_title_text)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_detail_title_text)).check(matches(withText("Active task")))
+        onView(withId(R.id.task_detail_description_text)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_detail_description_text)).check(matches(withText("AndroidX Rocks!!")))
+        // and check the "active" checkbox is shown unchecked
+        onView(withId(R.id.task_detail_complete_checkbox)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_detail_complete_checkbox)).check(matches(not(isChecked())))
     }
 }
